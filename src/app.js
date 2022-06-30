@@ -11,9 +11,8 @@ const readFoodDb = () => {
     foodDB[item] = [];
     const allFood = fs.readdirSync(`${sourceDir}/${item}`);
     allFood.forEach((food) => {
-      foodDB[item].push(`${sourceDir}/${item}/${food}`);
-    }
-    );
+      foodDB[item].push(`/${item}/${food}`);
+    });
   });
   return foodDB;
 };
