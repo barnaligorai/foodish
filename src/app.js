@@ -4,7 +4,7 @@ const { fileHandler } = require('./handlers/fileHandler.js');
 const fs = require('fs');
 
 const readFoodDb = () => {
-  const sourceDir = './public';
+  const sourceDir = './public/images';
   const menu = fs.readdirSync(sourceDir);
   const foodDB = {};
   menu.forEach(item => {
@@ -19,9 +19,10 @@ const readFoodDb = () => {
 
 const app = () => {
   const foodDb = readFoodDb();
+  const sourceDir = './public';
   const handlers = [
-    handleImage(foodDb),
-    fileHandler,
+    handleImage(foodDb, sourceDir),
+    fileHandler(sourceDir),
     notFound
   ];
   return createRouter(handlers);

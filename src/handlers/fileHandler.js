@@ -22,9 +22,9 @@ const setContentTypeHeader = (response, fileName) =>
 const setStatusCode = (response, code) =>
   response.statusCode = code;
 
-const fileHandler = (request, response) => {
+const fileHandler = sourceDir => (request, response) => {
   const { pathname } = request.url;
-  const fileName = './public' + pathname;
+  const fileName = sourceDir + pathname;
 
   if (fs.existsSync(fileName) && !fs.statSync(fileName).isDirectory()) {
     const content = fs.readFileSync(fileName);

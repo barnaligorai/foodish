@@ -12,29 +12,45 @@ const randomImage = (foodDb) => {
   return image;
 };
 
-const handleImage = foodDb => (request, response) => {
-  const { pathname } = request.url;
-  if (pathname === '/' || pathname === '/any') {
-    const image = randomImage(foodDb);
-    const content = fs.readFileSync('./public' + image);
-    response.statusCode = 200;
-    response.setHeader('content-Type', 'image/jpg');
-    response.end(content);
-    return true;
-  }
+const generatePage = (template, image) => {
+  let content;
+  content = template.replace('__IMAGE__', `images${image}`);
+  return content;
+};
 
-  if (pathname.startsWith('/image/')) {
-    const food = pathname.split('/')[2];
+const serverPage = (request, response) => {
+  const content = request.content;
+  response.statusCode = 200;
+  response.setHeader('content-Type', 'text/html');
+  response.end(content);
+  return true;
+};
+
+const handleImage = (foodDb, sourceDir) => {
+  const template = fs.readFileSync(`${sourceDir}/index.html`, 'utf8');
+
+  return (request, response) => {
+    const { pathname } = request.url;
+    if (pathname === '/' || pathname === '/any') {
+      const image = randomImage(foodDb);
+      const content = generatePage(template, image);
+      request.content = content;
+      return serverPage(request, response);
+    }
+
+    if (pathname !== '/image') {
+      return false;
+    }
+
+    const food = request.url.searchParams.get('food');
     if (foodDb[food]) {
       const image = randomImageFrom(foodDb[food]);
-      const content = fs.readFileSync('./public' + image);
-      response.statusCode = 200;
-      response.setHeader('content-Type', 'image/jpg');
-      response.end(content);
-      return true;
+      const content = generatePage(template, image);
+      request.content = content;
+      return serverPage(request, response);
     }
-  }
-  return false;
+    return false;
+  };
 };
 
 module.exports = { handleImage };

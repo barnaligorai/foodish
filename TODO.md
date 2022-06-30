@@ -1,10 +1,10 @@
 # TODO
 
   - [ ] Make handler for serving food api
-  - [ ] Make html for serving image
 
 # DONE
 
+  - [x] Make html for serving image
   - [x] Make app to serve new image on every refresh
   - [x] Make handler for serving food image
   - [x] Make handler for serving any image
