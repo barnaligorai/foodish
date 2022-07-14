@@ -6,7 +6,7 @@ A site to GET a random picture of food dishes.
 
   - / => any image
   - /any => any image
-  - /:food => any image of mentioned food
+  - /:image => any image of mentioned food
 
 
 ## Demo
@@ -16,5 +16,5 @@ localhost:PORT/
 
 localhost:PORT/any
 
-localhost:PORT/pizza
+localhost:PORT/image?food=burger
 ```

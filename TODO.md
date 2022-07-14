@@ -4,6 +4,7 @@
 
 # DONE
 
+  - [x] Implement express module
   - [x] Make html for serving image
   - [x] Make app to serve new image on every refresh
   - [x] Make handler for serving food image
